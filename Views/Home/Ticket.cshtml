@@ -1,0 +1,71 @@
+﻿@model IEnumerable<Ticket> <!--Will need changes based on model/controller-->
+@{
+    ViewBag.Title = "IT Tickets";
+}
+<div class="row">
+    <div class="col-sm-2">
+        <form asp-action="Filter" method="post">
+            <div class="form-group">
+                <label>Severity:</label>
+                <select name="filter" class="form-control"
+                        asp-items="@(new SelectList(ViewBag.Points, "Severity", "Value", ViewBag.Filters.PointId))">
+                    <option value="all">All</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Status:</label>
+                <select name="filter" class="form-control"
+                        asp-items="@(new SelectList(ViewBag.Statuses, "StatusId", "Name", ViewBag.Filters.PointId))">
+                    <option value="all">All</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Filter</button>
+            <a asp-action="Index" asp-route-id="" class="btn btn-primary">Clear</a>
+        </form>
+    </div>
+    <div class="col-sm-10">
+        <a asp-action="Add"><b>Add new ticket</b></a>
+
+        <table class="table table-bordered table-striped mt-2">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Ticket Number</th>
+                    <th>Severity</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (Ticket ticket in Model)
+                {
+                    <tr>
+                        <td>@ticket.Name</td>
+                        <td>@ticket.Description</td>
+                        <td>@ticket.Id</td>
+                        <td>@ticket.Severity.Value</td>
+                        <td>@ticket.Status.Name</td>
+                        <td>
+                            <form asp-action="Edit" method="post" asp-route-id="@ViewBag.Filters.FilterString"
+                                  class="mr-2">
+
+                                <input type="hidden" name="@nameof(Ticket.Id)" value="@ticket.Id" />
+
+                                <button type="submit" name="@nameof(Ticket.Status.Name)" value="Done"
+                                        class="btn btn-primary btn-sm">
+                                    Completed
+                                </button>
+
+                                <button type="submit"
+                                        class="btn btn-primary btn-sm">
+                                    Delete
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+</div>
