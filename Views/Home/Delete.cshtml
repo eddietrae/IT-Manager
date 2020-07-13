@@ -1,0 +1,13 @@
+﻿@model Ticket <!-- Needs changes once model is complete-->
+@{
+    ViewBag.Title = "Delete Ticket";
+}
+
+<h2>Confirm Deletion</h2>
+
+<h3>@Model.Name (@Model.Description)</h3>
+
+<form asp-action="Delete" method="post">
+    <input type="hidden" asp-for="TicketId" />
+    <button type="submit" class="btn btn-primary">Delete</button> <a asp-controller="Home" asp-action="Ticket" class="btn btn-primary">Cancel</a>
+</form>
