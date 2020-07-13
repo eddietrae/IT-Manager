@@ -24,6 +24,7 @@ namespace itmanager.Models
         [Required]
         public string Password { get; set; }
 
+        // Foreign Key to Store Table
         [Required]
         public int StoreId { get; set; }
         public Store Store { get; set; }
