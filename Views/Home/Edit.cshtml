@@ -1,0 +1,54 @@
+﻿@model Ticket
+@{
+    string title = ViewBag.Action + " Ticket";
+    ViewBag.Title = title;
+}
+
+<h2>@ViewBag.Title</h2>
+
+<form asp-action="Edit" method="post">
+    <div asp-validation-summary="All" class="text-danger"></div>
+
+    <div class="form-group">
+        <label asp-for="Name">Ticket Name:</label>
+        <input asp-for="Name" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="ShortDescription">Short Discription:</label>
+        <input asp-for="ShortDescription" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="DetailedDescription">Detailed Discription:</label>
+        <input asp-for="DetailedDescription" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Severity">Severity:</label>
+        <select asp-for="Severity" class="form-control" asp-items="@(new SelectList(ViewBag.Severities, "SeverityId", "Name"))">
+            <option value=""></option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label asp-for="StatusId">Status:</label>
+        <select asp-for="StatusId" class="form-control" asp-items="@(new SelectList(ViewBag.Statuses, "StatusId", "Name"))">
+            <option value=""></option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label asp-for="StoreId">Store:</label>
+        <select asp-for="StoreId" class="form-control" asp-items="@(new SelectList(ViewBag.Stores, "StoreId", "StoreAlias"))">
+            <option value=""></option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label asp-for="EmployeeId">EmployeeId:</label>
+        <select asp-for="EmployeeId" class="form-control" asp-items="@(new SelectList(ViewBag.Employees, "EmployeeId"))">
+            <option value=""></option>
+        </select>
+    </div>
+
+    <input type="hidden" asp-for="TicketId" />
+
+    <button type="submit" class="btn btn-primary">@ViewBag.Action</button>
+    <a asp-controller="Home" asp-action="Ticket" class="btn btn-primary">Cancel</a>
+</form>
+
