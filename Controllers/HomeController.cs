@@ -11,7 +11,9 @@ namespace itmanager.Controllers
 {
     public class HomeController : Controller
     {
- 
+        private TicketContext context;
+        public HomeController(TicketContext ctx) => context = ctx;
+
         public IActionResult Index()
         {
             return View();
@@ -25,17 +27,37 @@ namespace itmanager.Controllers
         public IActionResult Add()
         {
             ViewBag.Action = "Add";
+            ViewBag.Severities = context.Severities.ToList();
+            ViewBag.Statuses = context.Statuses.ToList();
+            ViewBag.Employees = context.Employees.ToList();
+            ViewBag.Stores = context.Stores.ToList();
             return View("Edit", new Ticket());
         }
 
-        public IActionResult Edit()
+        public IActionResult Edit(int id)
         {
-            return View();
+            ViewBag.Action = "Edit";
+            ViewBag.Severities = context.Severities.ToList();
+            ViewBag.Statuses = context.Statuses.ToList();
+            ViewBag.Employees = context.Employees.ToList();
+            ViewBag.Stores = context.Stores.ToList();
+            var ticket = context.Tickets.Find(id);
+            return View(ticket);
         }
 
-        public IActionResult Delete()
+        [HttpGet]
+        public IActionResult Delete(int id)
         {
-            return View();
+            var ticket = context.Tickets.Find(id);
+            return View(ticket);
+        }
+
+        [HttpPost]
+        public IActionResult Delete(Ticket ticket)
+        {
+            context.Tickets.Remove(ticket);
+            context.SaveChanges();
+            return RedirectToAction("Ticket", "Home");
         }
     }
 }
