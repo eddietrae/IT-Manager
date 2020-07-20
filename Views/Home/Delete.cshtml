@@ -1,11 +1,11 @@
-﻿@model Ticket <!-- Needs changes once model is complete-->
+﻿@model Ticket
 @{
     ViewBag.Title = "Delete Ticket";
 }
 
 <h2>Confirm Deletion</h2>
 
-<h3>@Model.Name (@Model.Description)</h3>
+<h3>@Model.Name (@Model.ShortDescription, @Model.Store.StoreId)</h3>
 
 <form asp-action="Delete" method="post">
     <input type="hidden" asp-for="TicketId" />

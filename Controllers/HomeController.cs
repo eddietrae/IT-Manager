@@ -11,13 +11,29 @@ namespace itmanager.Controllers
 {
     public class HomeController : Controller
     {
-
+ 
         public IActionResult Index()
         {
             return View();
         }
 
         public IActionResult Ticket()
+        {
+            return View();
+        }
+
+        public IActionResult Add()
+        {
+            ViewBag.Action = "Add";
+            return View("Edit", new Ticket());
+        }
+
+        public IActionResult Edit()
+        {
+            return View();
+        }
+
+        public IActionResult Delete()
         {
             return View();
         }
