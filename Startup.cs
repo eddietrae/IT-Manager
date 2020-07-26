@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.AspNetCore.Identity;
 
 namespace itmanager
 {
@@ -29,6 +30,9 @@ namespace itmanager
             services.AddDbContext<TicketContext>(options => options.UseSqlServer(@"Server=tcp:cis174pford.database.windows.net,1433;
                         Initial Catalog=CIS174;Persist Security Info=False;User ID=cis174;Password=Gemini99$;MultipleActiveResultSets=False;Encrypt=True;
                         TrustServerCertificate=False;Connection Timeout=30;"));
+            services.AddIdentity<User, IdentityRole>()
+                .AddEntityFrameworkStores<TicketContext>()
+                .AddDefaultTokenProviders();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -49,6 +53,7 @@ namespace itmanager
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

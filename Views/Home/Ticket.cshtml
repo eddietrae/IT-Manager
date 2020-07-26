@@ -40,16 +40,15 @@
                 @foreach (Ticket ticket in Model)
                 {
                     <tr>
-                        <td>@ticket.Name</td>
-                        <td>@ticket.Description</td>
-                        <td>@ticket.Id</td>
-                        <td>@ticket.Severity.Value</td>
+                        <td>@ticket.ShortDescription</td>
+                        <td>@ticket.TicketId</td>
+                        <td>@ticket.Severity.Name</td>
                         <td>@ticket.Status.Name</td>
                         <td>
                             <form asp-action="Edit" method="post" asp-route-id="@ViewBag.Filters.FilterString"
                                   class="mr-2">
 
-                                <input type="hidden" name="@nameof(Ticket.Id)" value="@ticket.Id" />
+                                <input type="hidden" name="@nameof(Ticket.TicketId)" value="@ticket.TicketId" />
 
                                 <button type="submit" name="@nameof(Ticket.Status.Name)" value="Done"
                                         class="btn btn-primary btn-sm">

@@ -4,10 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace itmanager.Models
 {
-    public class TicketContext : DbContext
+    public class TicketContext : IdentityDbContext<User>
     {
         public TicketContext(DbContextOptions<TicketContext> options)
             : base(options)
@@ -21,6 +22,8 @@ namespace itmanager.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
             modelBuilder.Entity<Severity>().HasData(
                 new Severity { SeverityId = "1", Name = "Low" },
                 new Severity { SeverityId = "2", Name = "Medium" },

@@ -21,12 +21,12 @@ namespace itmanager.Models
         // Foreign Key to Severity Table
         [Required(ErrorMessage = "Please enter the severity")]
         public string SeverityId { get; set; }
-        public string Severity { get; set; }
+        public Severity Severity { get; set; }
 
         // Foreign Key to Status Table
         [Required(ErrorMessage = "Please enter the status")]
         public string StatusId { get; set; }
-        public string Status { get; set; }
+        public Status Status { get; set; }
 
         // Foreign Key to Store table
         [Required(ErrorMessage = "Please enter the store")]

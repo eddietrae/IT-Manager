@@ -6,22 +6,39 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using itmanager.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.EntityFrameworkCore;
 
 namespace itmanager.Controllers
 {
+
     public class HomeController : Controller
     {
         private TicketContext context;
         public HomeController(TicketContext ctx) => context = ctx;
 
-        public IActionResult Index()
+        [HttpGet]
+        public IActionResult Index(string returnURL = "")
         {
-            return View();
+            var model = new LoginViewModel { ReturnUrl = returnURL };
+            return View(model);
         }
 
-        public IActionResult Ticket()
+        public IActionResult Ticket(string id)
         {
-            return View();
+            // load current filters and data needed for filter drop downs in ViewBag
+            var filters = new Filters(id);
+            ViewBag.Filters = filters;
+            ViewBag.Statuses = context.Statuses.ToList();
+
+            // get ToDo objects from database based on current filters
+            IQueryable<Ticket> query = context.Tickets.Include(t => t.Status);
+            if (filters.HasStatus)
+            {
+                query = query.Where(t => t.StatusId == filters.StatusId);
+            }
+            var tasks = query.OrderBy(t => t.StatusId).ToList();
+            return View(tasks);
         }
 
         public IActionResult Add()
