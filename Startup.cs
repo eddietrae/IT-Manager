@@ -65,6 +65,8 @@ namespace itmanager
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            TicketContext.CreateAdminUser(app.ApplicationServices).Wait();
         }
     }
 }

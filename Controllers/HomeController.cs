@@ -23,6 +23,7 @@ namespace itmanager.Controllers
             var model = new LoginViewModel { ReturnUrl = returnURL };
             return View(model);
         }
+
         [Authorize]
         public IActionResult Ticket(string id)
         {
@@ -49,12 +50,15 @@ namespace itmanager.Controllers
             var ticket = query.OrderBy(t => t.StatusId).ToList();
             return View(ticket);
         }
+
+        [Authorize]
         [HttpPost] // uses filter class to sort the table
         public IActionResult Filter(string[] filter)
         {
             string id = string.Join('-', filter);
             return RedirectToAction("Ticket", new { ID = id });
         }
+
         [Authorize]
         public IActionResult Add()
         {
@@ -64,6 +68,7 @@ namespace itmanager.Controllers
             ViewBag.Stores = context.Stores.ToList();
             return View("Edit", new Ticket());
         }
+
         [Authorize]
         [HttpGet]
         public IActionResult Edit(int id)
@@ -75,6 +80,8 @@ namespace itmanager.Controllers
             var ticket = context.Tickets.Find(id);
             return View(ticket);
         }
+
+        [Authorize]
         [HttpPost]
         public IActionResult Edit(Ticket ticket)
         {
@@ -95,14 +102,16 @@ namespace itmanager.Controllers
                 return View(ticket);
             }
         }
-        //[Authorize(Roles = "Admin")]
+
+        [Authorize]
         [HttpGet]
         public IActionResult Delete(int id)
         {
             var ticket = context.Tickets.Find(id);
             return View(ticket);
         }
-        //[Authorize(Roles = "Admin")]
+
+        [Authorize]
         [HttpPost]
         public IActionResult Delete(Ticket ticket)
         {
