@@ -33,30 +33,37 @@
                     <th>Ticket Number</th>
                     <th>Severity</th>
                     <th>Status</th>
+                    <th>Store Number</th>
+                    <th>Employee</th>
                     <th>Options</th>
                 </tr>
             </thead>
             <tbody>
-                
+                @using Microsoft.AspNetCore.Identity
                 @foreach (Ticket ticket in Model)
                 {
-                    <tr>
-                        <td>@ticket.ShortDescription</td>
-                        <td>@ticket.TicketId</td>
-                        <td>@ticket.Severity.Name</td>
-                        <td>@ticket.Status.Name</td>
-                        <td>
-                            <form asp-action="Edit" method="post" asp-route-id="@ViewBag.Filters.FilterString"
-                                    class="mr-2">
+                    if (ViewBag.StoreId == ticket.StoreId.ToString())
+                    {
+                        <tr>
+                            <td>@ticket.ShortDescription</td>
+                            <td>@ticket.TicketId</td>
+                            <td>@ticket.Severity.Name</td>
+                            <td>@ticket.Status.Name</td>
+                            <td>@ticket.StoreId</td>
+                            <td>@ticket.Employee</td>
+                            <td>
+                                <form asp-action="Edit" method="post" asp-route-id="@ViewBag.Filters.FilterString"
+                                      class="mr-2">
 
-                                <input type="hidden" name="@nameof(Ticket.TicketId)" value="@ticket.TicketId" />
+                                    <input type="hidden" name="@nameof(Ticket.TicketId)" value="@ticket.TicketId" />
 
 
 
-                                <a asp-controller="Home" asp-action="Delete" asp-route-id="@ticket.TicketId">Delete</a>
-                            </form>
-                        </td>
-                    </tr>
+                                    <a asp-controller="Home" asp-action="Delete" asp-route-id="@ticket.TicketId">Delete</a>
+                                </form>
+                            </td>
+                        </tr>
+                    }
                 }
             </tbody>
         </table>

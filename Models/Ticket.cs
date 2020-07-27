@@ -33,9 +33,6 @@ namespace itmanager.Models
         public int StoreId { get; set; }
         public Store Store { get; set; }
 
-        // Foreign Key to Employee Table
-        [Required(ErrorMessage = "Please enter the employee")]
-        public int EmployeeId { get; set; }
-        public Employee Employee { get; set; }
+        public string Employee { get; set; }
     }
 }

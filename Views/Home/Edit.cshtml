@@ -18,8 +18,8 @@
         <input asp-for="DetailedDescription" class="form-control" />
     </div>
     <div class="form-group">
-        <label asp-for="Severity">Severity:</label>
-        <select asp-for="Severity" class="form-control" asp-items="@(new SelectList(ViewBag.Severities, "SeverityId", "Name"))">
+        <label asp-for="SeverityId">Severity:</label>
+        <select asp-for="SeverityId" class="form-control" asp-items="@(new SelectList(ViewBag.Severities, "SeverityId", "Name"))">
             <option value=""></option>
         </select>
     </div>
@@ -35,8 +35,8 @@
             <option value=""></option>
         </select>
     </div>
-
     <input type="hidden" asp-for="TicketId" />
+    <input type="hidden" asp-for="Employee" value="@User.Identity.Name" />
 
     <button type="submit" class="btn btn-primary">@ViewBag.Action</button>
     <a asp-controller="Home" asp-action="Ticket" class="btn btn-primary">Cancel</a>

@@ -31,9 +31,13 @@ namespace itmanager.Controllers
             ViewBag.Filters = filters;
             ViewBag.Statuses = context.Statuses.ToList();
             ViewBag.Severities = context.Severities.ToList();
+            ViewBag.StoreId = (from s in context.Users.AsNoTracking()
+                              where s.UserName == User.Identity.Name
+                              select s.StoreId).Single();
+            
 
-            // get ToDo objects from database based on current filters
-            IQueryable<Ticket> query = context.Tickets.Include(t => t.Status);
+            // get Ticket objects from database based on current filters
+            IQueryable < Ticket > query = context.Tickets.Include(t => t.Status);
             if (filters.HasStatus)
             {
                 query = query.Where(t => t.StatusId == filters.StatusId);
@@ -57,7 +61,6 @@ namespace itmanager.Controllers
             ViewBag.Action = "Add";
             ViewBag.Severities = context.Severities.ToList();
             ViewBag.Statuses = context.Statuses.ToList();
-            ViewBag.Employees = context.Employees.ToList();
             ViewBag.Stores = context.Stores.ToList();
             return View("Edit", new Ticket());
         }
@@ -68,7 +71,6 @@ namespace itmanager.Controllers
             ViewBag.Action = "Edit";
             ViewBag.Severities = context.Severities.ToList();
             ViewBag.Statuses = context.Statuses.ToList();
-            ViewBag.Employees = context.Employees.ToList();
             ViewBag.Stores = context.Stores.ToList();
             var ticket = context.Tickets.Find(id);
             return View(ticket);

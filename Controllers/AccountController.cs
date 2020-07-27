@@ -40,7 +40,7 @@ namespace itmanager.Controllers
                     Firstname = model.Firstname,
                     Lastname = model.Lastname,
                     Email = model.Email,
-                    //StoreId = model.StoreId
+                    StoreId = model.StoreId
                 };
                 var result = await userManager.CreateAsync(user, model.Password);
 
