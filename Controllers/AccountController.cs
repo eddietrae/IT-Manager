@@ -12,17 +12,20 @@ namespace itmanager.Controllers
     {
         private UserManager<User> userManager;
         private SignInManager<User> signInManager;
+        public TicketContext context;
 
         public AccountController(UserManager<User> userMngr,
-            SignInManager<User> signInMngr)
+            SignInManager<User> signInMngr, TicketContext ctx)
         {
             userManager = userMngr;
             signInManager = signInMngr;
+            context = ctx;
         }
 
         [HttpGet]
         public IActionResult Register()
         {
+            ViewBag.Stores = context.Stores.ToList(); 
             return View();
         }
 
@@ -37,7 +40,7 @@ namespace itmanager.Controllers
                     Firstname = model.Firstname,
                     Lastname = model.Lastname,
                     Email = model.Email,
-                    StoreId = model.StoreId
+                    //StoreId = model.StoreId
                 };
                 var result = await userManager.CreateAsync(user, model.Password);
 
@@ -90,7 +93,7 @@ namespace itmanager.Controllers
                     }
                     else
                     {
-                        return RedirectToAction("Index", "Ticket");
+                        return RedirectToAction("Ticket", "Home");
                     }
                 }
             }

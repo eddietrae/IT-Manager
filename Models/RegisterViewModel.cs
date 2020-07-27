@@ -34,7 +34,7 @@ namespace itmanager.Models
         [Display(Name = "Confirm Password")]
         public string ConfirmPassword { get; set; }
 
-        [Required(ErrorMessage = "Please select a status.")]
+        [Required(ErrorMessage = "Please select a store.")]
         public string StoreId { get; set; }        // foreign key property
         public Store Store { get; set; }          // navigation property
     }

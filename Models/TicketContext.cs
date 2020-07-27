@@ -20,6 +20,12 @@ namespace itmanager.Models
         public DbSet<Status> Statuses { get; set; }
         public DbSet<Store> Stores { get; set; }
 
+        protected override void OnConfiguring(DbContextOptionsBuilder options)
+            => options.UseSqlServer(@"Server=tcp:cis174pford.database.windows.net,1433;
+                        Initial Catalog=CIS174;Persist Security Info=False;User ID=cis174;Password=Gemini99$;MultipleActiveResultSets=False;Encrypt=True;
+                        TrustServerCertificate=False;Connection Timeout=30;");
+
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

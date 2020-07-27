@@ -23,13 +23,14 @@ namespace itmanager.Controllers
             var model = new LoginViewModel { ReturnUrl = returnURL };
             return View(model);
         }
-
+        [Authorize]
         public IActionResult Ticket(string id)
         {
             // load current filters and data needed for filter drop downs in ViewBag
             var filters = new Filters(id);
             ViewBag.Filters = filters;
             ViewBag.Statuses = context.Statuses.ToList();
+            ViewBag.Severities = context.Severities.ToList();
 
             // get ToDo objects from database based on current filters
             IQueryable<Ticket> query = context.Tickets.Include(t => t.Status);
@@ -37,10 +38,20 @@ namespace itmanager.Controllers
             {
                 query = query.Where(t => t.StatusId == filters.StatusId);
             }
-            var tasks = query.OrderBy(t => t.StatusId).ToList();
-            return View(tasks);
+            if (filters.HasSeverity)
+            {
+                query = query.Where(t => t.SeverityId == filters.SeverityId);
+            }
+            var ticket = query.OrderBy(t => t.StatusId).ToList();
+            return View(ticket);
         }
-
+        [HttpPost] // uses filter class to sort the table
+        public IActionResult Filter(string[] filter)
+        {
+            string id = string.Join('-', filter);
+            return RedirectToAction("Ticket", new { ID = id });
+        }
+        [Authorize]
         public IActionResult Add()
         {
             ViewBag.Action = "Add";
@@ -50,7 +61,8 @@ namespace itmanager.Controllers
             ViewBag.Stores = context.Stores.ToList();
             return View("Edit", new Ticket());
         }
-
+        [Authorize]
+        [HttpGet]
         public IActionResult Edit(int id)
         {
             ViewBag.Action = "Edit";
@@ -61,14 +73,34 @@ namespace itmanager.Controllers
             var ticket = context.Tickets.Find(id);
             return View(ticket);
         }
-
+        [HttpPost]
+        public IActionResult Edit(Ticket ticket)
+        {
+            if (ModelState.IsValid)
+            {
+                if (ticket.TicketId == 0)
+                {
+                    context.Tickets.Add(ticket);
+                }
+                else
+                    context.Tickets.Update(ticket);
+                context.SaveChanges();
+                return RedirectToAction("Ticket", "Home");
+            }
+            else
+            {
+                ViewBag.Action = (ticket.TicketId == 0) ? "Add" : "Edit";
+                return View(ticket);
+            }
+        }
+        //[Authorize(Roles = "Admin")]
         [HttpGet]
         public IActionResult Delete(int id)
         {
             var ticket = context.Tickets.Find(id);
             return View(ticket);
         }
-
+        //[Authorize(Roles = "Admin")]
         [HttpPost]
         public IActionResult Delete(Ticket ticket)
         {

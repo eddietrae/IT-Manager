@@ -6,7 +6,7 @@
 <h2>Register</h2>
 
 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-<form method="post" asp-action="Register">
+<form method="post" asp-controller="Account" asp-action="Register">
     <div class="form-group row">
         <div class="col-sm-2"><label>Username:</label></div>
         <div class="col-sm-4">
@@ -72,7 +72,7 @@
     <div class="form-group">
         <label asp-for="StoreId">Store ID:</label>
         <select asp-for="StoreId" class="form-control"
-                asp-items="@(new SelectList(ViewBag.StoreId, "StoreId", "StoreAlias"))">
+                asp-items="@(new SelectList(ViewBag.Stores, "StoreId", "StoreAlias"))">
             <option value=""></option>
         </select>
     </div>

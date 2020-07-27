@@ -29,15 +29,9 @@
             <option value=""></option>
         </select>
     </div>
-    @*Only for admin when time comes <div class="form-group">
+    <div class="form-group">
         <label asp-for="StoreId">Store:</label>
         <select asp-for="StoreId" class="form-control" asp-items="@(new SelectList(ViewBag.Stores, "StoreId", "StoreAlias"))">
-            <option value=""></option>
-        </select>
-    </div>*@
-    <div class="form-group">
-        <label asp-for="EmployeeId">EmployeeId:</label>
-        <select asp-for="EmployeeId" class="form-control" asp-items="@(new SelectList(ViewBag.Employees, "EmployeeId"))">
             <option value=""></option>
         </select>
     </div>

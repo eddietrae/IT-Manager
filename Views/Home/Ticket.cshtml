@@ -8,7 +8,7 @@
             <div class="form-group">
                 <label>Severity:</label>
                 <select name="filter" class="form-control"
-                        asp-items="@(new SelectList(ViewBag.Points, "SeverityId", "Name", ViewBag.Filters.SeverityId))">
+                        asp-items="@(new SelectList(ViewBag.Severities, "SeverityId", "Name", ViewBag.Filters.SeverityId))">
                     <option value="all">All</option>
                 </select>
             </div>
@@ -29,14 +29,15 @@
         <table class="table table-bordered table-striped mt-2">
             <thead>
                 <tr>
-                    <th>Name</th>
                     <th>Description</th>
                     <th>Ticket Number</th>
                     <th>Severity</th>
                     <th>Status</th>
+                    <th>Options</th>
                 </tr>
             </thead>
             <tbody>
+                
                 @foreach (Ticket ticket in Model)
                 {
                     <tr>
@@ -46,19 +47,13 @@
                         <td>@ticket.Status.Name</td>
                         <td>
                             <form asp-action="Edit" method="post" asp-route-id="@ViewBag.Filters.FilterString"
-                                  class="mr-2">
+                                    class="mr-2">
 
                                 <input type="hidden" name="@nameof(Ticket.TicketId)" value="@ticket.TicketId" />
 
-                                <button type="submit" name="@nameof(Ticket.Status.Name)" value="Done"
-                                        class="btn btn-primary btn-sm">
-                                    Completed
-                                </button>
 
-                                <button type="submit"
-                                        class="btn btn-primary btn-sm">
-                                    Delete
-                                </button>
+
+                                <a asp-controller="Home" asp-action="Delete" asp-route-id="@ticket.TicketId">Delete</a>
                             </form>
                         </td>
                     </tr>

@@ -27,12 +27,14 @@ namespace itmanager
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-            services.AddDbContext<TicketContext>(options => options.UseSqlServer(@"Server=tcp:cis174pford.database.windows.net,1433;
-                        Initial Catalog=CIS174;Persist Security Info=False;User ID=cis174;Password=Gemini99$;MultipleActiveResultSets=False;Encrypt=True;
-                        TrustServerCertificate=False;Connection Timeout=30;"));
+     
+            services.AddDbContext<TicketContext>();
+
             services.AddIdentity<User, IdentityRole>()
                 .AddEntityFrameworkStores<TicketContext>()
                 .AddDefaultTokenProviders();
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -55,6 +57,7 @@ namespace itmanager
 
             app.UseAuthentication();
             app.UseAuthorization();
+
 
             app.UseEndpoints(endpoints =>
             {
