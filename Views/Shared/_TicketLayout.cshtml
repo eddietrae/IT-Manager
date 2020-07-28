@@ -2,23 +2,28 @@
     Layout = "_Layout";
 }
 
-@* show any message in TempData*@
-@if (TempData["message"] != null)
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<User> signInManager
+@if (signInManager.IsSignedIn(User))
 {
-    <h4 class="bg-success p-2">@TempData["message"]</h4>
-}
+    @* show any message in TempData*@
+    @if (TempData["message"] != null)
+    {
+        <h4 class="bg-success p-2">@TempData["message"]</h4>
+    }
 
-@* show link to Watched Tickets page unless on Watched Tickets page *@
-@if (!ViewContext.View.Path.Contains("Watch"))
-{
-    var session = new TicketSession(Context.Session);
-    <h5 class="bg-info p-2">
-        <a asp-controller="Watch" asp-action="Index"
-           class="text-white">My Watched Tickets</a>
+    @* show link to Watched Tickets page unless on Watched Tickets page *@
+    @if (!ViewContext.View.Path.Contains("Watch"))
+    {
+        var session = new TicketSession(Context.Session);
+        <h5 class="bg-info p-2">
+            <a asp-controller="Watch" asp-action="Index"
+               class="text-white">My Watched Tickets</a>
 
-        @* get number of watched tickets from session and display in badge *@
-        <span class="badge badge-light">@(session.GetMyTicketCount())</span>
-    </h5>
+            @* get number of watched tickets from session and display in badge *@
+            <span class="badge badge-light">@(session.GetMyTicketCount())</span>
+        </h5>
+    }
 }
 
 @RenderBody()
