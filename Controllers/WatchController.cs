@@ -29,9 +29,9 @@ namespace itmanager.Controllers
             session.RemoveMyTickets();
             cookies.RemoveMyTicketIds();
 
-            TempData["message"] = "Favorite countries cleared";
+            TempData["message"] = "Watched tickets cleared";
 
-            return RedirectToAction("Index", "Home",
+            return RedirectToAction("Ticket", "Home",
                 new
                 {
                     ActiveSportType = session.GetActiveStore(),

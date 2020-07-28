@@ -4,14 +4,14 @@
 }
 
 <div class="text-center">
-    <h2>My Favorites</h2>
+    <h2>My Watched</h2>
     <form asp-action="Delete" method="post">
         <a asp-action="Ticket" asp-controller="Home" class="btn btn-primary"
            asp-route-activeStore="@Model.ActiveStore">
             Back to Tickets List
         </a>
         <button type="submit" class="btn btn-primary">
-            Clear Favorites
+            Clear Watched
         </button>
     </form>
     <br />

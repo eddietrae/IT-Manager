@@ -6,6 +6,7 @@
 <div class="row">
     <div class="col-sm-2">
         <form asp-action="Filter" method="post">
+            <!-- Filter for Severity -->
             <div class="form-group">
                 <label>Severity:</label>
                 <select name="filter" class="form-control"
@@ -13,6 +14,7 @@
                     <option value="all">All</option>
                 </select>
             </div>
+            <!-- Filter for Status -->
             <div class="form-group">
                 <label>Status:</label>
                 <select name="filter" class="form-control"
@@ -43,7 +45,7 @@
                 @using Microsoft.AspNetCore.Identity
                 @foreach (Ticket ticket in Model)
                 {
-                    if (User.IsInRole("Admin"))
+                    if (User.IsInRole("Admin")) // Admin can see all tickets
                     {
                         <tr>
                             <td>@ticket.ShortDescription</td>
@@ -64,6 +66,7 @@
                             </td>
                         </tr>
                     }
+                    // Users can see tickets for their store and tickets they submitted. They also cant use edit or delete unless its linked to their name.
                     else if (ViewBag.StoreId == ticket.StoreId.ToString() || ticket.Employee == User.Identity.Name)
                     {
                         <tr>
@@ -76,7 +79,7 @@
                             <td>
                                 <form asp-action="Edit" method="post" asp-route-id="@ViewBag.Filters.FilterString"
                                       class="mr-2">
-
+                                    <a asp-controller="Home" asp-action="Details" asp-route-id="@ticket.TicketId">Details</a>
                                     <input type="hidden" name="@nameof(Ticket.TicketId)" value="@ticket.TicketId" />
                                     @if (ticket.Employee == User.Identity.Name)
                                     {
