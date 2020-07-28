@@ -3,13 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 
 namespace itmanager.Models
 {
     public class TicketSession
     {
-        private const string EmpKey = "employee";
+
+        private const string TicketsKey = "mytickets";
+        private const string CountKey = "ticketcount";
+        private const string StoreKey = "store";
 
         private ISession session { get; set; }
         public TicketSession(ISession session)
@@ -17,13 +19,24 @@ namespace itmanager.Models
             this.session = session;
         }
 
-        public void SetActiveEmployee(string activeEmployee) =>
-            session.SetString(EmpKey, activeEmployee);
-        public string GetActiveEmployee() => session.GetString(EmpKey);
-
-        public void RemoveMyEmployees()
+        public void SetMyTickets(List<Ticket> tickets)
         {
-            session.Remove(EmpKey);
+            session.SetObject(TicketsKey, tickets);
+            session.SetInt32(CountKey, tickets.Count);
+        }
+
+        public List<Ticket> GetMyTickets() =>
+            session.GetObject<List<Ticket>>(TicketsKey) ?? new List<Ticket>();
+        public int? GetMyTicketCount() => session.GetInt32(CountKey);
+
+        public void SetActiveStore(string activeStore) =>
+            session.SetString(StoreKey, activeStore);
+        public string GetActiveStore() => session.GetString(StoreKey);
+
+        public void RemoveMyTickets()
+        {
+            session.Remove(TicketsKey);
+            session.Remove(CountKey);
         }
     }
 }

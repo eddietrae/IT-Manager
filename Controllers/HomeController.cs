@@ -119,5 +119,46 @@ namespace itmanager.Controllers
             context.SaveChanges();
             return RedirectToAction("Ticket", "Home");
         }
+
+        [Route("[controller]/Details/{id?}")]
+        [HttpGet]
+        public IActionResult Details(int id)
+        {
+            var session = new TicketSession(HttpContext.Session);
+            var model = new TicketViewModel
+            {
+                Ticket = context.Tickets
+                    .Include(t => t.Store)
+                    .FirstOrDefault(t => t.TicketId == id),
+                ActiveStore = session.GetActiveStore(),
+            };
+            return View(model);
+        }
+
+        [Route("[controller]/Watches/{id?}")]
+        [HttpPost]
+        public RedirectToActionResult AddWatch(TicketViewModel model)
+        {
+            model.Ticket = context.Tickets
+                .Include(t => t.Store)
+                .Where(t => t.TicketId == model.Ticket.TicketId)
+                .FirstOrDefault();
+
+            var session = new TicketSession(HttpContext.Session);
+            var tickets = session.GetMyTickets();
+            tickets.Add(model.Ticket);
+            session.SetMyTickets(tickets);
+
+            var cookies = new TicketCookies(Response.Cookies);
+            cookies.SetMyTicketIds(tickets);
+
+            TempData["message"] = $"{model.Ticket.ShortDescription} added to your favorites";
+
+            return RedirectToAction("Ticket", "Home",
+                new
+                {
+                    ActiveSportType = session.GetActiveStore(),
+                });
+        }
     }
 }

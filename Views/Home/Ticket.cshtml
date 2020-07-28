@@ -1,5 +1,6 @@
 ﻿@model IEnumerable<Ticket> 
 @{
+    Layout = "_TicketLayout";
     ViewBag.Title = "IT Tickets";
 }
 <div class="row">
@@ -56,6 +57,7 @@
                                       class="mr-2">
 
                                     <input type="hidden" name="@nameof(Ticket.TicketId)" value="@ticket.TicketId" />
+                                    <a asp-controller="Home" asp-action="Details" asp-route-id="@ticket.TicketId">Details</a>
                                     <a asp-controller="Home" asp-action="Edit" asp-route-id="@ticket.TicketId">Edit</a>
                                     <a asp-controller="Home" asp-action="Delete" asp-route-id="@ticket.TicketId">Delete</a>
                                 </form>

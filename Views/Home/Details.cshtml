@@ -1,0 +1,38 @@
+﻿@model TicketViewModel
+@{
+    ViewData["Title"] = "Ticket Details";
+}
+
+<h2 class="text-center">Ticket Details</h2>
+
+<div class="row">
+    <div class="col-6 offset-3">
+        <ul class="list-group text-center">
+            <li class="list-group-item">
+                <h7>Ticket Id: @Model.Ticket.TicketId</h7>
+            </li>
+            <li class="list-group-item">
+                <h7>Short Description: @Model.Ticket.ShortDescription</h7>
+            </li>
+            <li class="list-group-item">
+                <h7>Detailed Description: @Model.Ticket.DetailedDescription</h7>
+            </li>
+            <li class="list-group-item">
+                <h7>Store Id: @Model.Ticket.Store.StoreId</h7>
+            </li>
+            <li class="list-group-item">
+                <h7>Store Alias: @Model.Ticket.Store.StoreAlias</h7>
+            </li>
+            <li class="list-group-item">
+                <form asp-action="AddWatch" method="post">
+                    <a asp-action="Ticket" class="btn btn-primary"
+                       asp-route-activeStore="@Model.ActiveStore">Return to Tickets</a>
+                    <button type="submit" class="btn btn-primary">
+                        Add to Favorites
+                    </button>
+                    <input type="hidden" asp-for="Ticket.TicketId" />
+                </form>
+            </li>
+        </ul>
+    </div>
+</div>

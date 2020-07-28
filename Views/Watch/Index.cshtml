@@ -1,0 +1,42 @@
+﻿@model TicketListViewModel
+@{
+    ViewData["Title"] = "Watched Tickets";
+}
+
+<div class="text-center">
+    <h2>My Favorites</h2>
+    <form asp-action="Delete" method="post">
+        <a asp-action="Ticket" asp-controller="Home" class="btn btn-primary"
+           asp-route-activeStore="@Model.ActiveStore">
+            Back to Tickets List
+        </a>
+        <button type="submit" class="btn btn-primary">
+            Clear Favorites
+        </button>
+    </form>
+    <br />
+</div>
+
+
+<div class="row">
+    <div class="col-8 offset-2">
+        <ul class="list-group">
+            @foreach (Ticket ticket in Model.Tickets)
+            {
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-sm-4">
+                            @ticket.ShortDescription
+                        </div>
+                        <div class="col-sm-4">
+                            @ticket.DetailedDescription
+                        </div>
+                        <div class="col-sm-4">
+                            @ticket.Store.StoreId
+                        </div>
+                    </div>
+                </li>
+            }
+        </ul>
+    </div>
+</div>
