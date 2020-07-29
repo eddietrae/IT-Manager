@@ -8,6 +8,7 @@ using Microsoft.Extensions.Logging;
 using itmanager.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
+using Moq;
 
 namespace itmanager.Controllers
 {
@@ -15,6 +16,7 @@ namespace itmanager.Controllers
     public class HomeController : Controller
     {
         private TicketContext context;
+
         public HomeController(TicketContext ctx) => context = ctx;
 
         [HttpGet]

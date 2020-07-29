@@ -35,5 +35,14 @@ namespace itmanager.Models
         public Store Store { get; set; }
 
         public string Employee { get; set; }
+
+        public DateTime CreationDate { get; set; }
+
+        public double DaysSinceCreation(DateTime CreationDate)
+        {
+            var days = (DateTime.Now - CreationDate).TotalDays;
+            days = Math.Round(days);
+            return days;
+        }
     }
 }
