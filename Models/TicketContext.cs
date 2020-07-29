@@ -10,38 +10,45 @@ using Microsoft.AspNetCore.Identity;
 
 namespace itmanager.Models
 {
+    // Ticket Context inherits from IdentityDbContext Class
     public class TicketContext : IdentityDbContext<User>
     {
         public TicketContext(DbContextOptions<TicketContext> options)
             : base(options)
         { }
-
+        
+        // Add properties of entity collections
         public DbSet<Ticket> Tickets { get; set; }
         public DbSet<Severity> Severities { get; set; }
         public DbSet<Status> Statuses { get; set; }
         public DbSet<Store> Stores { get; set; }
 
+        // set up context for communicating with the SQL database
         protected override void OnConfiguring(DbContextOptionsBuilder options)
             => options.UseSqlServer(@"Server=tcp:cis174pford.database.windows.net,1433;
                         Initial Catalog=CIS174;Persist Security Info=False;User ID=cis174;Password=Gemini99$;MultipleActiveResultSets=False;Encrypt=True;
                         TrustServerCertificate=False;Connection Timeout=30;");
 
-
+        // do initial seed seeding of tables
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            // this does the user table from the inherited class
             base.OnModelCreating(modelBuilder);
 
+            // values for the severity table
             modelBuilder.Entity<Severity>().HasData(
                 new Severity { SeverityId = "1", Name = "Low" },
                 new Severity { SeverityId = "2", Name = "Medium" },
                 new Severity { SeverityId = "3", Name = "High" },
                 new Severity { SeverityId = "4", Name = "Emergency" }
                 );
+            // values for the status table
             modelBuilder.Entity<Status>().HasData(
                 new Status { StatusId = "1", Name = "In Queue"},
                 new Status { StatusId = "2", Name = "In Progress"},
                 new Status { StatusId = "3", Name = "Complete" }
                 );
+            // values for the store table
             modelBuilder.Entity<Store>().HasData(
                 new Store { StoreId = 1, StoreAlias = "1375", StreetAddress = "2900 Devils Glen Road", City = "Bettendorf", State = "IA", Zip = "52722" },
                 new Store { StoreId = 2, StoreAlias = "5035", StreetAddress = "1307 East North Avenue", City = "Belton", State = "MO", Zip = "64012" },
@@ -49,6 +56,7 @@ namespace itmanager.Models
                 new Store { StoreId = 4, StoreAlias = "4205", StreetAddress = "2930 18th Avenue", City = "Rock Island", State = "IL", Zip = "61201" },
                 new Store { StoreId = 5, StoreAlias = "1601", StreetAddress = "1700 Valley West Drive", City = "West Des Moines", State = "IA", Zip = "50266" }
                 );
+            // initial sample tickets loaded to the system
             modelBuilder.Entity<Ticket>().HasData(
                 new Ticket
                 {
@@ -98,6 +106,7 @@ namespace itmanager.Models
             );
         }
 
+        // set up user and roles
         public static async Task CreateAdminUser(IServiceProvider serviceProvider)
         {
             UserManager<User> userManager =
@@ -105,6 +114,7 @@ namespace itmanager.Models
             RoleManager<IdentityRole> roleManager =
                 serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
+            // admin user
             string username = "admin";
             string password = "Password1!";
             string roleName = "Admin";

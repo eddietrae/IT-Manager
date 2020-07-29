@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 
 namespace itmanager.Models
 {
+    // set up status class with all required fields
     public class Status
     {
         public string StatusId { get; set; }

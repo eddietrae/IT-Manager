@@ -6,6 +6,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace itmanager.Models
 {
+    // Set up Register View with required fields information
     public class RegisterViewModel
     {
         [Required(ErrorMessage = "Please enter a username.")]

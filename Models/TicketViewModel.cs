@@ -8,6 +8,7 @@ namespace itmanager.Models
 {
     public class TicketViewModel
     {
+        // setting up Ticket view to have Ticket and ActiveStore info (comes from TicketSession)
         public Ticket Ticket { get; set; }
         public string ActiveStore { get; set; } = "all";
     }

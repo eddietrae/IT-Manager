@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace itmanager.Models
 {
+    // set up Store class with all required fields
     public class Store
     {
         public int StoreId { get; set; }

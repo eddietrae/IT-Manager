@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace itmanager.Models
 {
+    // setting up ticket class with all fields required
     public class Ticket
     {
         public int TicketId { get; set; }

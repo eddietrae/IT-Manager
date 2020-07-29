@@ -8,6 +8,7 @@ namespace itmanager.Models
 {
     public class LoginViewModel
     {
+        // set up of screen fields and requirements for Login page
         [Required(ErrorMessage = "Please enter a username.")]
         [StringLength(255)]
         public string Username { get; set; }

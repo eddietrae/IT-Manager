@@ -7,8 +7,10 @@ using Microsoft.AspNetCore.Identity;
 
 namespace itmanager.Models
 {
+    // set up of User class - inherits from IdentityUser
     public class User : IdentityUser
     {
+        // on top of identityuser default fields also setting up Firstname, Lastname, StoreId, Store
         public string Firstname { get; set; }
         public string Lastname { get; set; }
 

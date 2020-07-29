@@ -8,9 +8,12 @@ namespace itmanager.Models
 {
     public class TicketListViewModel : TicketViewModel
     {
+        // get tickets list
         public List<Ticket> Tickets { get; set; }
 
+        // private store list
         private List<Store> stores;
+        // for filter drop-down data - one hard coded
         public List<Store> Stores
         {
             get => stores;

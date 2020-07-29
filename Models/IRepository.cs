@@ -7,6 +7,7 @@ namespace itmanager.Models
 {
     public interface IRepository<T> where T : class
     {
+        // set up of IRepository class to be able to use for Ticket view
         IEnumerable<T> List(QueryOptions<T> options);
 
         T Get(int id);
