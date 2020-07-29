@@ -57,6 +57,7 @@ namespace itmanager.Controllers
                     }
                 }
             }
+            ViewBag.Stores = context.Stores.ToList();
             return View(model);
         }
 

@@ -34,7 +34,7 @@ namespace itmanager.Controllers
             return RedirectToAction("Ticket", "Home",
                 new
                 {
-                    ActiveSportType = session.GetActiveStore(),
+                    ActiveStore = session.GetActiveStore(),
                 });
         }
     }

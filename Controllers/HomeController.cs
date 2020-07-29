@@ -99,6 +99,9 @@ namespace itmanager.Controllers
             else
             {
                 ViewBag.Action = (ticket.TicketId == 0) ? "Add" : "Edit";
+                ViewBag.Severities = context.Severities.ToList();
+                ViewBag.Statuses = context.Statuses.ToList();
+                ViewBag.Stores = context.Stores.ToList();
                 return View(ticket);
             }
         }
