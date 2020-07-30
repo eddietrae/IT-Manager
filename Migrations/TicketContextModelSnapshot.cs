@@ -300,6 +300,9 @@ namespace itmanager.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("DetailedDescription")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -337,6 +340,7 @@ namespace itmanager.Migrations
                         new
                         {
                             TicketId = 1,
+                            CreationDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DetailedDescription = "First upload of a ticket to make sure we can connect to a database",
                             SeverityId = "1",
                             ShortDescription = "First Ticket",
@@ -346,6 +350,7 @@ namespace itmanager.Migrations
                         new
                         {
                             TicketId = 2,
+                            CreationDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DetailedDescription = "My register is broken..... mehhhhhhhhhhhhhhh",
                             SeverityId = "2",
                             ShortDescription = "Second Ticket",
@@ -355,6 +360,7 @@ namespace itmanager.Migrations
                         new
                         {
                             TicketId = 3,
+                            CreationDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DetailedDescription = "This register is causing us issues.",
                             SeverityId = "3",
                             ShortDescription = "Third Ticket",
@@ -364,6 +370,7 @@ namespace itmanager.Migrations
                         new
                         {
                             TicketId = 4,
+                            CreationDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DetailedDescription = "Nothing like pharmacy screwing up....... blah",
                             SeverityId = "1",
                             ShortDescription = "Fouth Ticket",
@@ -373,6 +380,7 @@ namespace itmanager.Migrations
                         new
                         {
                             TicketId = 5,
+                            CreationDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DetailedDescription = "The whole store is down",
                             SeverityId = "4",
                             ShortDescription = "Fifth Ticket",

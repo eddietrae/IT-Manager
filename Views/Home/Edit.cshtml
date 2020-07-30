@@ -36,6 +36,10 @@
         </select>
     </div>
     <input type="hidden" asp-for="TicketId" />
+    @if (User.IsInRole("Admin"))
+    {
+
+    }
     <input type="hidden" asp-for="Employee" value="@User.Identity.Name" />
 
     <button type="submit" class="btn btn-primary">@ViewBag.Action</button>
