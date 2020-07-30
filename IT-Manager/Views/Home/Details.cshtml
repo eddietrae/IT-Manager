@@ -24,6 +24,12 @@
                 <h7>Store Alias: @Model.Ticket.Store.StoreAlias</h7>
             </li>
             <li class="list-group-item">
+                <h7>Date: @Model.Ticket.CreationDate</h7>
+            </li>
+            <li class="list-group-item">
+                <h7>Days Since Creation: @Model.Ticket.DaysSinceCreation(Model.Ticket.CreationDate)</h7>
+            </li>
+            <li class="list-group-item">
                 <form asp-action="AddWatch" method="post">
                     <a asp-action="Ticket" class="btn btn-primary"
                        asp-route-activeStore="@Model.ActiveStore">Return to Tickets</a>
