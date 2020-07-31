@@ -1,10 +1,11 @@
 ﻿@model RegisterViewModel
 @{
     ViewBag.Title = "Register";
+    // Registers a new user with all required fields. Passwords must have 1 capital, 1 number, 1 special, and be at least 8 characters
 }
 
 <h2>Register</h2>
-
+<!--Input validation-->
 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 <form method="post" asp-controller="Account" asp-action="Register">
     <div class="form-group row">
@@ -75,6 +76,10 @@
                 asp-items="@(new SelectList(ViewBag.Stores, "StoreId", "StoreAlias"))">
             <option value=""></option>
         </select>
+        <div class="col">
+            <span asp-validation-for="StoreId"
+                  class="text-danger"></span>
+        </div>
     </div>
     <div class="row">
         <div class="offset-2 col-sm-4">

@@ -12,24 +12,24 @@ using Moq;
 
 namespace itmanager.Controllers
 {
-
+    // Controls homepage and all ticket pages
     public class HomeController : Controller
     {
         private TicketContext context;
 
         public HomeController(TicketContext ctx) => context = ctx;
 
-        [HttpGet]
+        [HttpGet] // Index is currently a log in page since you need to be signed in to do anything in tickets as is
         public IActionResult Index(string returnURL = "")
         {
             var model = new LoginViewModel { ReturnUrl = returnURL };
             return View(model);
         }
-
+        // Must be logged in to access anything involving tickets
         [Authorize]
         public IActionResult Ticket(string id)
         {
-            // load current filters and data needed for filter drop downs in ViewBag
+            // Load current filters and data needed for filter drop downs in ViewBag
             var filters = new Filters(id);
             ViewBag.Filters = filters;
             ViewBag.Statuses = context.Statuses.ToList();
@@ -39,7 +39,7 @@ namespace itmanager.Controllers
                               select s.StoreId).Single();
             
 
-            // get Ticket objects from database based on current filters
+            // Get Ticket objects from database based on current filters
             IQueryable < Ticket > query = context.Tickets.Include(t => t.Status);
             if (filters.HasStatus)
             {
@@ -54,14 +54,14 @@ namespace itmanager.Controllers
         }
 
         [Authorize]
-        [HttpPost] // uses filter class to sort the table
+        [HttpPost] // Uses filter class to sort the table
         public IActionResult Filter(string[] filter)
         {
             string id = string.Join('-', filter);
             return RedirectToAction("Ticket", new { ID = id });
         }
 
-        [Authorize]
+        [Authorize] // Add function for tickets. Passes an empty ticket to the edit view
         public IActionResult Add()
         {
             ViewBag.Action = "Add";
@@ -71,7 +71,7 @@ namespace itmanager.Controllers
             return View("Edit", new Ticket());
         }
 
-        [Authorize]
+        [Authorize] // Edit function for tickets. Takes the ticket id and passses that ticket information to view
         [HttpGet]
         public IActionResult Edit(int id)
         {
@@ -84,21 +84,21 @@ namespace itmanager.Controllers
         }
 
         [Authorize]
-        [HttpPost]
+        [HttpPost] // Takes ticket and validates that it is okay to post.
         public IActionResult Edit(Ticket ticket)
         {
             if (ModelState.IsValid)
             {
                 if (ticket.TicketId == 0)
                 {
-                    context.Tickets.Add(ticket);
+                    context.Tickets.Add(ticket); // Adds if new ticket
                 }
                 else
-                    context.Tickets.Update(ticket);
+                    context.Tickets.Update(ticket); // Updates if existing
                 context.SaveChanges();
                 return RedirectToAction("Ticket", "Home");
             }
-            else
+            else // Model state wasnt valid so show the view again
             {
                 ViewBag.Action = (ticket.TicketId == 0) ? "Add" : "Edit";
                 ViewBag.Severities = context.Severities.ToList();
@@ -109,7 +109,7 @@ namespace itmanager.Controllers
         }
 
         [Authorize]
-        [HttpGet]
+        [HttpGet] // Takes ticket id and passes it to delete view
         public IActionResult Delete(int id)
         {
             var ticket = context.Tickets.Find(id);
@@ -117,7 +117,7 @@ namespace itmanager.Controllers
         }
 
         [Authorize]
-        [HttpPost]
+        [HttpPost] // If user does want to remove the ticket displayed it removes the ticket and returns to tickets
         public IActionResult Delete(Ticket ticket)
         {
             context.Tickets.Remove(ticket);
@@ -126,7 +126,7 @@ namespace itmanager.Controllers
         }
 
         [Route("[controller]/Details/{id?}")]
-        [HttpGet]
+        [HttpGet] // Details page for each ticket based on ticket id
         public IActionResult Details(int id)
         {
             var session = new TicketSession(HttpContext.Session);
@@ -141,7 +141,7 @@ namespace itmanager.Controllers
         }
 
         [Route("[controller]/Watches/{id?}")]
-        [HttpPost]
+        [HttpPost] // Adds ticket to watch list
         public RedirectToActionResult AddWatch(TicketViewModel model)
         {
             model.Ticket = context.Tickets

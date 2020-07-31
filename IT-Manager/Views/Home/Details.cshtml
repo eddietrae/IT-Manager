@@ -1,6 +1,7 @@
 ﻿@model TicketViewModel
 @{
     ViewData["Title"] = "Ticket Details";
+    // This is a page for an idividual ticket's details, you can also add it to your watch list
 }
 
 <h2 class="text-center">Ticket Details</h2>
@@ -26,7 +27,7 @@
             <li class="list-group-item">
                 <h7>Date: @Model.Ticket.CreationDate</h7>
             </li>
-            <li class="list-group-item">
+            <li class="list-group-item"><!--How many days the ticket has existed-->
                 <h7>Days Since Creation: @Model.Ticket.DaysSinceCreation(Model.Ticket.CreationDate)</h7>
             </li>
             <li class="list-group-item">

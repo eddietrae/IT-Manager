@@ -6,13 +6,13 @@
 @inject SignInManager<User> signInManager
 @if (signInManager.IsSignedIn(User))
 {
-    @* show any message in TempData*@
+    //Show any message in TempData
     @if (TempData["message"] != null)
     {
         <h4 class="bg-success p-2">@TempData["message"]</h4>
     }
 
-    @* show link to Watched Tickets page unless on Watched Tickets page *@
+    //show link to Watched Tickets page unless on Watched Tickets page
     @if (!ViewContext.View.Path.Contains("Watch"))
     {
         var session = new TicketSession(Context.Session);
@@ -20,7 +20,7 @@
             <a asp-controller="Watch" asp-action="Index"
                class="text-white">My Watched Tickets</a>
 
-            @* get number of watched tickets from session and display in badge *@
+            <!--Get number of watched tickets from session and display in badge-->
             <span class="badge badge-light">@(session.GetMyTicketCount())</span>
         </h5>
     }

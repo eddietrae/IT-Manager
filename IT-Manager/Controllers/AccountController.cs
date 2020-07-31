@@ -8,6 +8,7 @@ using itmanager.Models;
 
 namespace itmanager.Controllers
 {
+    // Controls user accounts
     public class AccountController : Controller
     {
         private UserManager<User> userManager;
@@ -22,14 +23,14 @@ namespace itmanager.Controllers
             context = ctx;
         }
 
-        [HttpGet]
+        [HttpGet] // Register View with a list of stores to pick from
         public IActionResult Register()
         {
             ViewBag.Stores = context.Stores.ToList(); 
             return View();
         }
 
-        [HttpPost]
+        [HttpPost] // If valid creates a new user and signs them in
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
             if (ModelState.IsValid)
@@ -61,7 +62,7 @@ namespace itmanager.Controllers
             return View(model);
         }
 
-        // I never got this to work in my homework
+        // Logs user out
         [HttpPost]
         public async Task<IActionResult> LogOut()
         {
@@ -69,13 +70,14 @@ namespace itmanager.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        [HttpGet]
+        [HttpGet] // Initial login view, saves url if you were redirected
         public IActionResult LogIn(string returnURL = "")
         {
             var model = new LoginViewModel { ReturnUrl = returnURL };
             return View(model);
         }
 
+        // Post for logging in. If redirected to the login page it will redirect you back to where you were going
         [HttpPost]
         public async Task<IActionResult> LogIn(LoginViewModel model)
         {
@@ -102,6 +104,7 @@ namespace itmanager.Controllers
             return View(model);
         }
 
+        // Not used atm
         public ViewResult AccessDenied()
         {
             return View();

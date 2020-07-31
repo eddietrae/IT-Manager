@@ -36,12 +36,14 @@ namespace itmanager.Models
 
         public string Employee { get; set; }
 
+        // The input for this is the DateTime.Now on the form if applicable
         public DateTime CreationDate { get; set; }
 
+        // Takes a DateTime and returns a double of how many days have passed since the parameter
         public double DaysSinceCreation(DateTime CreationDate)
         {
             var days = (DateTime.Now - CreationDate).TotalDays;
-            days = Math.Round(days);
+            days = Math.Round(days); // rounding to nearest whole number
             return days;
         }
     }

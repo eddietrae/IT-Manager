@@ -1,6 +1,6 @@
 ﻿@model IEnumerable<Ticket> 
 @{
-    Layout = "_TicketLayout";
+    Layout = "_TicketLayout"; // Nested layout for watched tickets
     ViewBag.Title = "IT Tickets";
 }
 <div class="row">
@@ -27,8 +27,8 @@
         </form>
     </div>
     <div class="col-sm-10">
-        <a asp-action="Add"><b>Add new ticket</b></a>
-
+        <a asp-action="Add"><b>Add new ticket</b></a> <!--Add Ticket-->
+        <!--Table and Column Headers-->
         <table class="table table-bordered table-striped mt-2">
             <thead>
                 <tr>
@@ -44,9 +44,9 @@
             </thead>
             <tbody>
                 @using Microsoft.AspNetCore.Identity
-                @foreach (Ticket ticket in Model)
+                @foreach (Ticket ticket in Model) // Run through every ticket so they can be printed if applicable
                 {
-                    if (User.IsInRole("Admin")) // Admin can see all tickets
+                    if (User.IsInRole("Admin")) // Admin can see all tickets as well as edit and delete all tickets
                     {
                         <tr>
                             <td>@ticket.ShortDescription</td>

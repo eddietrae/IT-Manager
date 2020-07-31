@@ -58,7 +58,7 @@ namespace itmanager
             app.UseStaticFiles();
 
             app.UseRouting();
-
+            // Handles users
             app.UseAuthentication();
             app.UseAuthorization();
 
@@ -70,7 +70,7 @@ namespace itmanager
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
-
+            // Allowed seeding for an admin login
             TicketContext.CreateAdminUser(app.ApplicationServices).Wait();
         }
     }

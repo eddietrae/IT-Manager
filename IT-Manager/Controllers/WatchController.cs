@@ -7,9 +7,10 @@ using itmanager.Models;
 
 namespace itmanager.Controllers
 {
+    // Controls watch list
     public class WatchController : Controller
     {
-        public ViewResult Index()
+        public ViewResult Index() // Shows watched tickets
         {
             var session = new TicketSession(HttpContext.Session);
             var model = new TicketListViewModel
@@ -21,7 +22,7 @@ namespace itmanager.Controllers
         }
         
         [HttpPost]
-        public RedirectToActionResult Delete()
+        public RedirectToActionResult Delete() // Clears watched tickets
         {
             var session = new TicketSession(HttpContext.Session);
             var cookies = new TicketCookies(Response.Cookies);

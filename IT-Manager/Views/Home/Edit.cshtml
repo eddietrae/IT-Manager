@@ -1,11 +1,11 @@
 ﻿@model Ticket
 @{
-    string title = ViewBag.Action + " Ticket";
+    string title = ViewBag.Action + " Ticket"; // Uses 'Action' because this page handles Add() and Edit()
     ViewBag.Title = title;
 }
 
 <h2>@ViewBag.Title</h2>
-
+<!--Form for entering or editing tickets-->
 <form asp-action="Edit" method="post">
     <div asp-validation-summary="All" class="text-danger"></div>
 
@@ -17,26 +17,26 @@
         <label asp-for="DetailedDescription">Detailed Discription:</label>
         <input asp-for="DetailedDescription" class="form-control" />
     </div>
-    <div class="form-group">
+    <div class="form-group"><!--Dropdown-->
         <label asp-for="SeverityId">Severity:</label>
         <select asp-for="SeverityId" class="form-control" asp-items="@(new SelectList(ViewBag.Severities, "SeverityId", "Name"))">
             <option value=""></option>
         </select>
     </div>
-    <div class="form-group">
+    <div class="form-group"><!--Dropdown-->
         <label asp-for="StatusId">Status:</label>
         <select asp-for="StatusId" class="form-control" asp-items="@(new SelectList(ViewBag.Statuses, "StatusId", "Name"))">
             <option value=""></option>
         </select>
     </div>
-    <div class="form-group">
+    <div class="form-group"><!--Dropdown-->
         <label asp-for="StoreId">Store:</label>
         <select asp-for="StoreId" class="form-control" asp-items="@(new SelectList(ViewBag.Stores, "StoreId", "StoreAlias"))">
             <option value=""></option>
         </select>
     </div>
     <input type="hidden" asp-for="TicketId" />
-
+    <!--If this is a new ticket add the employee who created it and the creation date/time-->
     @if (ViewBag.Action == "Add")
     {
         <input type="hidden" asp-for="CreationDate" value="@DateTime.Now" />
