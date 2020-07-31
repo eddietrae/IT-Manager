@@ -157,7 +157,7 @@ namespace itmanager.Controllers
             var cookies = new TicketCookies(Response.Cookies);
             cookies.SetMyTicketIds(tickets);
 
-            TempData["message"] = $"{model.Ticket.ShortDescription} added to your favorites";
+            TempData["message"] = $"{model.Ticket.ShortDescription} added to your watch list";
 
             return RedirectToAction("Ticket", "Home",
                 new
