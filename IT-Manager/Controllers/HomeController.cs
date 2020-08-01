@@ -81,6 +81,7 @@ namespace itmanager.Controllers
             ViewBag.Stores = context.Stores.ToList();
             var ticket = context.Tickets.Find(id);
             ViewBag.Date = ticket.CreationDate;
+            ViewBag.Employee = ticket.Employee;
             return View(ticket);
         }
 
@@ -106,6 +107,7 @@ namespace itmanager.Controllers
                 ViewBag.Statuses = context.Statuses.ToList();
                 ViewBag.Stores = context.Stores.ToList();
                 ViewBag.Date = ticket.CreationDate;
+                ViewBag.Employee = ticket.Employee;
                 return View(ticket);
             }
         }

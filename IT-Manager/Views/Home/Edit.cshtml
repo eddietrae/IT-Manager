@@ -48,6 +48,7 @@
     else
     {
         <input type="hidden" asp-for="CreationDate" value="@ViewBag.Date" /> // Keep original date if edit
+        <input type="hidden" asp-for="Employee" value="@ViewBag.Employee" />
     }
 
     <button type="submit" class="btn btn-primary">@ViewBag.Action</button>
